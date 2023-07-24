@@ -1,0 +1,8 @@
+{
+  "name": "@rule-of-thumb/poll-card",
+  "version": "1.0.0",
+  "description": "Card containing thumb up and thumb down buttons, title and description to customize",
+  "main": "index.tsx",
+  "private": true,
+  "dependencies": {}
+}
