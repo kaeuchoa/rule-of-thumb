@@ -1,0 +1,8 @@
+{
+  "name": "@rule-of-thumb/navbar",
+  "version": "1.0.0",
+  "description": "responsive navbar",
+  "main": "index.tsx",
+  "private": true,
+  "dependencies": {}
+}
