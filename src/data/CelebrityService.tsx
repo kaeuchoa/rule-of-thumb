@@ -1,21 +1,8 @@
 import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
 import axios, { AxiosError } from 'axios';
+import { Celebrity } from '../shared/types';
 
 const queryClient = new QueryClient();
-
-interface Celebrity {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  picture: string;
-  lastUpdated: string;
-  votes: {
-    positive: number;
-    negative: number;
-  };
-}
-
 class CelebrityService {
   async fetchCelebrities(): Promise<Celebrity[]> {
     try {
