@@ -1,13 +1,12 @@
 import axios, { AxiosError } from 'axios';
-import { useQuery } from 'react-query';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { Poll } from '../shared/types';
 
-const BASE_URL = 'http://localhost:4000';
-
+const queryClient = new QueryClient();
 class PollService {
   async fetchPolls(): Promise<Poll[]> {
     try {
-      const response = await axios.get(`${BASE_URL}/polls`);
+      const response = await axios.get(`http://localhost:4000/polls`);
       return response.data;
     } catch (error) {
       // Handle Axios errors
@@ -36,9 +35,13 @@ class PollService {
   }*/
 }
 
+export function PollDataProvider({ children }: { children: React.ReactNode }) {
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+}
+
 export function usePolls() {
   const service = new PollService();
-  return useQuery<Poll[]>({
+  return useQuery({
     queryKey: 'polls',
     queryFn: () => service.fetchPolls(),
   });

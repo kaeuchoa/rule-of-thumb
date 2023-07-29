@@ -1,8 +1,0 @@
-{
-  "name": "@rule-of-thumb/poll-list-item",
-  "version": "1.0.0",
-  "description": "List Item containing interactive elements to show results and voting",
-  "main": "index.tsx",
-  "private": true,
-  "dependencies": {}
-}

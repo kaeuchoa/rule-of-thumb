@@ -2,8 +2,9 @@
 
 import React from 'react';
 
+export type ThumbsIcon = 'thumb-up' | 'thumb-down';
 interface PollListItemProps {
-  icon: 'thumb-up' | 'thumb-down';
+  icon: ThumbsIcon;
   imageUrl: string;
   title: string;
   description: string;
@@ -51,7 +52,7 @@ const PollListItem: React.FC<PollListItemProps> = ({
         <div className="result-thumb-up" style={{ width: `${(thumbsUpCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
         <div className="result-thumb-down" style={{ width: `${(thumbsDownCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
       </div>
-      <p className="result-count">{`${thumbsUpCount} Thumb Up | ${thumbsDownCount} Thumb Down`}</p>
+      <p className="result-count">{`${thumbsUpCount}% Thumb Up | ${thumbsDownCount}% Thumb Down`}</p>
     </div>
   );
 };
