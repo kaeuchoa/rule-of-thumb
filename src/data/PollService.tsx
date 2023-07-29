@@ -81,7 +81,12 @@ export function usePolls() {
 
 export function useSubmitVote() {
   const mutation = useMutation<void, AxiosError, { pollId: number; voteType: VoteType }>(
-    ({ pollId, voteType }) => new PollService().submitVote(pollId, voteType)
+    ({ pollId, voteType }) => new PollService().submitVote(pollId, voteType),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('polls');
+      },
+    }
   );
 
   return mutation;
