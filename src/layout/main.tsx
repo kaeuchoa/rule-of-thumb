@@ -1,6 +1,8 @@
-import PollCard from "../packages/PollCard";
-import PollListItem from "../packages/PollListItem";
-import { Celebrity, useCelebrities } from '../data/CelebrityService';
+import PollCard from "@rule-of-thumb/poll-card";
+import PollsList from '@rule-of-thumb/polls-list';
+
+import { useCelebrities } from '../data/CelebrityService';
+import { Celebrity } from '../shared/types';
 
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
@@ -46,26 +48,7 @@ const Main = () => {
       </section>
       <section>
         <h2>Previous Rulings</h2>
-        <ul>
-          {celebrities.map(({ id, category, description, votes, picture, name }) => (
-            <li>
-              <PollListItem
-                key={id}
-                category={category}
-                description={description}
-                icon={votes.positive > votes.negative ? 'thumb-up' : 'thumb-down'}
-                imageUrl={picture}
-                openDuration='22'
-                thumbsDownCount={votes.negative}
-                thumbsUpCount={votes.positive}
-                title={name}
-                onThumbDownClick={() => console.log('thumb down')}
-                onThumbUpClick={() => console.log('thumb up')}
-                onVoteClick={() => console.log('on vote')}
-              />
-            </li>
-          ))}
-        </ul>
+        <PollsList />
       </section>
       <section>
         <div>CTA with button</div>
