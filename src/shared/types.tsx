@@ -16,6 +16,15 @@ export enum ResultIcon {
   ThumbDown = 'thumb-down',
 }
 
+export type Vote = {
+  pollId: number | null;
+  vote: VoteType | null;
+}
+
+export enum VoteType {
+  positive,
+  negative
+}
 export interface Poll {
   id: number;
   positivePercentage: number;
