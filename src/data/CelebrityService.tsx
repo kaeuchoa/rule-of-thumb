@@ -1,5 +1,5 @@
 import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const queryClient = new QueryClient();
 
@@ -16,16 +16,19 @@ interface Celebrity {
   };
 }
 
-type GetCelebrityResponse = {
-  data: Celebrity[]
-}
-
 class CelebrityService {
-  async fetchCelebrities() {
-    const { data, status } = await axios.get<GetCelebrityResponse>('http://localhost:4000/data');
-    console.info(JSON.stringify(data, null, 4));
-    console.info('response status is:', status);
-    return data.data;
+  async fetchCelebrities(): Promise<Celebrity[]> {
+    try {
+      const response = await axios.get('http://localhost:4000/data');
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        throw new Error(`Request failed with status ${axiosError.response?.status}: ${axiosError.message}`);
+      }
+
+      throw new Error('An unexpected error occurred while fetching data.');
+    }
   }
 }
 
@@ -34,5 +37,9 @@ export function CelebrityDataProvider({ children }: { children: React.ReactNode 
 }
 
 export function useCelebrities() {
-  return useQuery('celebrities', () => new CelebrityService().fetchCelebrities());
+  const service = new CelebrityService();
+  return useQuery({
+    queryKey: 'celebrities',
+    queryFn: () => service.fetchCelebrities(),
+  });
 }
