@@ -1,18 +1,40 @@
 import PollCard from "../packages/PollCard";
 import PollListItem from "../packages/PollListItem";
+import { Celebrity, useCelebrities } from '../data/CelebrityService';
+
+function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
+  return items.slice().sort((a, b) => {
+    const dateA = new Date(a.lastUpdated).getTime();
+    const dateB = new Date(b.lastUpdated).getTime();
+    return dateB - dateA; // Sort in descending order (latest first)
+  });
+}
 
 const Main = () => {
+
+  const { data: celebrities, isLoading } = useCelebrities();
+
+  if (isLoading) {
+    <>loading...</>
+  }
+
+  if (!celebrities) {
+    return <>no data</>
+  }
+
+  const firstCelebrity = orderByLastUpdated(celebrities)[0];
+
   return (
     <main>
       <section>
         <div>
           placeholder hero carousel
           <PollCard
-            primaryTitle="title"
-            description="lorem impsum"
+            primaryTitle={firstCelebrity.name}
+            description={firstCelebrity.description}
             imgAlt="alt"
-            imgSrc="src"
-            infoLink="wikipedia"
+            imgSrc={firstCelebrity.picture}
+            infoLink="/"
             onThumbDownClick={() => console.log("thumb down")}
             onThumbUpClick={() => console.log("thumb up")}
           />
@@ -25,21 +47,24 @@ const Main = () => {
       <section>
         <h2>Previous Rulings</h2>
         <ul>
-          <li>
-            <PollListItem
-              category="category"
-              description="description"
-              icon="thumb-up"
-              imageUrl="img/path"
-              openDuration='22'
-              thumbsDownCount={20}
-              thumbsUpCount={25}
-              title='name'
-              onThumbDownClick={() => console.log('thumb down')}
-              onThumbUpClick={() => console.log('thumb up')}
-              onVoteClick={() => console.log('on vote')}
-            />
-          </li>
+          {celebrities.map(({ id, category, description, votes, picture, name }) => (
+            <li>
+              <PollListItem
+                key={id}
+                category={category}
+                description={description}
+                icon={votes.positive > votes.negative ? 'thumb-up' : 'thumb-down'}
+                imageUrl={picture}
+                openDuration='22'
+                thumbsDownCount={votes.negative}
+                thumbsUpCount={votes.positive}
+                title={name}
+                onThumbDownClick={() => console.log('thumb down')}
+                onThumbUpClick={() => console.log('thumb up')}
+                onVoteClick={() => console.log('on vote')}
+              />
+            </li>
+          ))}
         </ul>
       </section>
       <section>
