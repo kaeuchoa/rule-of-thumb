@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Footer from './layout/Footer';
+import Main from './layout/main';
+import Navbar from '@rule-of-thumb/navbar';
+import { CelebrityDataProvider } from './data/CelebrityService';
+import { PollDataProvider } from './data/PollService';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Main />
+      <Footer />
+    </>
   );
 }
 
-export default App;
+export default function AppWithProvider() {
+  return (
+    <PollDataProvider>
+      <CelebrityDataProvider>
+        <App />
+      </CelebrityDataProvider>
+    </PollDataProvider>
+  );
+}

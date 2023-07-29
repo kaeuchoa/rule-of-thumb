@@ -6,7 +6,7 @@ const queryClient = new QueryClient();
 class CelebrityService {
   async fetchCelebrities(): Promise<Celebrity[]> {
     try {
-      const response = await axios.get('http://localhost:4000/data');
+      const response = await axios.get('http://localhost:4000/celebrities');
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
