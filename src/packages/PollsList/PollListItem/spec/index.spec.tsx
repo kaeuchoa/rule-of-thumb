@@ -1,18 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import PollListItem from '..';
+import PollListItem, { ThumbsIcon } from '..';
 
 describe('PollListItem component', () => {
   const mockProps = {
-    icon: 'thumb-up',
+    icon: 'thumb-up' as ThumbsIcon,
     imageUrl: 'celebrity.jpg',
     title: 'John Doe',
     description: 'Short description',
     openDuration: '2 days',
     category: 'Entertainment',
-    thumbsUpCount: '90%',
-    thumbsDownCount: '10%',
+    thumbsUpCount: 90,
+    thumbsDownCount: 10,
     onThumbUpClick: jest.fn(),
     onThumbDownClick: jest.fn(),
     onVoteClick: jest.fn(),

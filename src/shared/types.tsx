@@ -17,6 +17,7 @@ export enum ResultIcon {
 }
 
 export interface Poll {
+  id: number;
   positivePercentage: number;
   negativePercentage: number;
   resultIcon: ResultIcon;
