@@ -35,9 +35,6 @@ const Main = () => {
           <PollCard
             primaryTitle={firstCelebrity.name}
             description={firstCelebrity.description}
-            imgAlt="alt"
-            imgSrc={firstCelebrity.picture}
-            infoLink="/"
             onThumbDownClick={() => handleThumbDownVote(firstCelebrity.id)}
             onThumbUpClick={() => handleThumbUpVote(firstCelebrity.id)}
           />
