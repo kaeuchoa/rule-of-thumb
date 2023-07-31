@@ -7,6 +7,7 @@ import { useNegativeVote, usePositiveVote } from '../shared/hooks';
 
 import styles from './styles.module.css';
 import CTABanner from './CTABanner';
+import SpeakOutBanner from './SpeakOutBanner';
 
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
@@ -54,7 +55,7 @@ const Main = () => {
         </div>
       </section>
       <section>
-        <div>banner placeholder</div>
+        <SpeakOutBanner />
       </section>
       <section>
         <h2>Previous Rulings</h2>
