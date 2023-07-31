@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { QueryClient, QueryClientProvider, useMutation, useQuery } from 'react-query';
+import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from 'react-query';
 import { Poll, VoteType } from '../shared/types';
 import { deepCopy } from '../utils';
 
@@ -65,6 +65,38 @@ class PollService {
       throw error;
     }
   }
+
+  async getPollByCelebrityId(celebrityId: number): Promise<Poll[]> {
+    try {
+      const response = await axios.get(`${BASE_URL}/polls?celebrity.id=${celebrityId}`);
+      return response.data;
+    } catch (error) {
+      // Handle Axios errors
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        throw new Error(`Request failed with status ${axiosError.response?.status}: ${axiosError.message}`);
+      }
+
+      // Handle other errors
+      throw new Error('An unexpected error occurred while fetching the poll.');
+    }
+  }
+
+  async updatePositiveVoteByCelebrityId(pollId: number, patchPoll: Partial<Poll>): Promise<Poll> {
+    try {
+      const response = await axios.patch(`${BASE_URL}/polls/${pollId}`, patchPoll);
+      return response.data;
+    } catch (error) {
+      // Handle Axios errors
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        throw new Error(`Request failed with status ${axiosError.response?.status}: ${axiosError.message}`);
+      }
+
+      // Handle other errors
+      throw new Error('An unexpected error occurred while updating the positive vote.');
+    }
+  }
 }
 
 export function PollDataProvider({ children }: { children: React.ReactNode }) {
@@ -82,6 +114,48 @@ export function usePolls() {
 export function useSubmitVote() {
   const mutation = useMutation<void, AxiosError, { pollId: number; voteType: VoteType }>(
     ({ pollId, voteType }) => new PollService().submitVote(pollId, voteType),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('polls');
+      },
+    }
+  );
+
+  return mutation;
+}
+
+export function useUpdatePositiveVoteByCelebrityId() {
+  const queryClient = useQueryClient();
+  const pollService = new PollService();
+
+  const mutation = useMutation<Poll, AxiosError, { celebrityId: number }>(
+    async ({ celebrityId }) => {
+      const [poll] = await pollService.getPollByCelebrityId(celebrityId);
+      const patchPoll = { celebrity: { ...poll.celebrity } }
+      patchPoll.celebrity.votes.positive = poll.celebrity.votes.positive + 1;
+      return pollService.updatePositiveVoteByCelebrityId(poll.id, patchPoll);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('polls');
+      },
+    }
+  );
+
+  return mutation;
+}
+
+export function useUpdateNegativeVoteByCelebrityId() {
+  const queryClient = useQueryClient();
+  const pollService = new PollService();
+
+  const mutation = useMutation<Poll, AxiosError, { celebrityId: number }>(
+    async ({ celebrityId }) => {
+      const [poll] = await pollService.getPollByCelebrityId(celebrityId);
+      const patchPoll = { celebrity: { ...poll.celebrity } }
+      patchPoll.celebrity.votes.positive = poll.celebrity.votes.positive - 1;
+      return pollService.updatePositiveVoteByCelebrityId(poll.id, patchPoll);
+    },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('polls');

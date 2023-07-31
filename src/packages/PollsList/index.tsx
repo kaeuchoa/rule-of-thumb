@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { usePolls, useSubmitVote } from '../../data/PollService'
+import { usePolls } from '../../data/PollService'
 import PollListItem from './PollListItem'
-import { Vote, VoteType } from '../../shared/types';
+import { VoteType } from '../../shared/types';
+import { useVoteHandler } from '../../shared/hooks';
+
 
 const PollsList = () => {
   const { data: polls, isLoading } = usePolls();
-  const submitVoteMutation = useSubmitVote();
-  const [vote, setVote] = useState<Vote>({ pollId: null, vote: null })
+  const { handleVoteClick, setVote } = useVoteHandler()
 
   if (isLoading) {
     return <>loading....</>
@@ -15,24 +15,6 @@ const PollsList = () => {
   if (!polls) {
     return <>no polls found</>
   }
-
-  const handleVoteClick = () => {
-    if (vote.vote === null || vote.pollId === null) return
-
-    if (vote.vote === VoteType.positive) {
-      handleThumbUpVote(vote.pollId)
-    } else {
-      handleThumbDownVote(vote.pollId)
-    }
-    //refetch data
-  }
-  const handleThumbUpVote = (id: number) => {
-    submitVoteMutation.mutate({ pollId: id, voteType: VoteType.positive });
-  };
-
-  const handleThumbDownVote = (id: number) => {
-    submitVoteMutation.mutate({ pollId: id, voteType: VoteType.negative });
-  };
 
   return (
     <ul>
