@@ -3,6 +3,7 @@ import PollsList from '@rule-of-thumb/polls-list';
 
 import { useCelebrities } from '../data/CelebrityService';
 import { Celebrity } from '../shared/types';
+import { useNegativeVote, usePositiveVote } from '../shared/hooks';
 
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
@@ -13,8 +14,9 @@ function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
 }
 
 const Main = () => {
-
   const { data: celebrities, isLoading } = useCelebrities();
+  const { handleThumbUpVote } = usePositiveVote();
+  const { handleThumbDownVote } = useNegativeVote();
 
   if (isLoading) {
     <>loading...</>
@@ -25,7 +27,6 @@ const Main = () => {
   }
 
   const firstCelebrity = orderByLastUpdated(celebrities)[0];
-
   return (
     <main>
       <section>
@@ -37,8 +38,8 @@ const Main = () => {
             imgAlt="alt"
             imgSrc={firstCelebrity.picture}
             infoLink="/"
-            onThumbDownClick={() => console.log("thumb down")}
-            onThumbUpClick={() => console.log("thumb up")}
+            onThumbDownClick={() => handleThumbDownVote(firstCelebrity.id)}
+            onThumbUpClick={() => handleThumbUpVote(firstCelebrity.id)}
           />
         </div>
         <div>placeholder countdown</div>
