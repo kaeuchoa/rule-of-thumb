@@ -5,6 +5,8 @@ import { useCelebrities } from '../data/CelebrityService';
 import { Celebrity } from '../shared/types';
 import { useNegativeVote, usePositiveVote } from '../shared/hooks';
 
+import styles from './styles.module.css';
+
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
     const dateA = new Date(a.lastUpdated).getTime();
@@ -39,7 +41,15 @@ const Main = () => {
             onThumbUpClick={() => handleThumbUpVote(firstCelebrity.id)}
           />
         </div>
-        <div>placeholder countdown</div>
+        <div className={styles["hero__closing-gauge"]}>
+          <div className={styles["closing-gauge__left"]}>
+            <span className={styles["closing-gauge__title"]}>closing in</span>
+          </div>
+          <div className={styles["closing-gauge__right"]}>
+            <span className={styles["closing-gauge__number"]}>22</span>
+            <span className={styles["closing-gauge__desc"]}>days</span>
+          </div>
+        </div>
       </section>
       <section>
         <div>banner placeholder</div>
