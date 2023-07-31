@@ -6,6 +6,7 @@ import { Celebrity } from '../shared/types';
 import { useNegativeVote, usePositiveVote } from '../shared/hooks';
 
 import styles from './styles.module.css';
+import CTABanner from './CTABanner';
 
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
@@ -41,6 +42,7 @@ const Main = () => {
             onThumbUpClick={() => handleThumbUpVote(firstCelebrity.id)}
           />
         </div>
+        {/* move to component */}
         <div className={styles["hero__closing-gauge"]}>
           <div className={styles["closing-gauge__left"]}>
             <span className={styles["closing-gauge__title"]}>closing in</span>
@@ -59,7 +61,7 @@ const Main = () => {
         <PollsList />
       </section>
       <section>
-        <div>CTA with button</div>
+        <CTABanner /> 
       </section>
     </main>
   );
