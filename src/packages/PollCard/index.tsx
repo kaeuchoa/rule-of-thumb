@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './css/styles.module.css';
 import thumbUp from './assets/imgs/thumbs-up.svg'
 import thumbDown from './assets/imgs/thumbs-down.svg'
-import wikipediaIcon from './assets/imgs/wikipedia.svg'
-
 interface PollCardProps {
   primaryTitle: string;
   description: string;
@@ -13,8 +11,8 @@ interface PollCardProps {
 
 const PollCard: React.FC<PollCardProps> = ({ primaryTitle, description, onThumbUpClick, onThumbDownClick }) => {
   return (
-    <>
-      <div className={styles["featured-card__glass-background"]}></div>
+    <div className={styles["featured-card"]}>
+      <div className={styles["featured-card__glass-background"]} />
       <div className={styles["featured-card__content"]}>
         <p className={styles["featured-card__hairline"]}>What's your opinion on</p>
         <h2 className={styles["featured-card__title"]}>{primaryTitle}</h2>
@@ -31,14 +29,14 @@ const PollCard: React.FC<PollCardProps> = ({ primaryTitle, description, onThumbU
         </p>
         <div className={styles["featured-card__buttons"]}>
           <button className={styles["icon-button"]} aria-label='thumbs up' onClick={onThumbUpClick}>
-          <img src={thumbUp} alt="thumbs up" />
-        </button>
-        <button className={styles["icon-button"]} aria-label='thumbs down' onClick={onThumbDownClick}>
-          <img src={thumbDown} alt="thumbs down" />
-        </button>
+            <img src={thumbUp} alt="thumbs up" />
+          </button>
+          <button className={styles["icon-button"]} aria-label='thumbs down' onClick={onThumbDownClick}>
+            <img src={thumbDown} alt="thumbs down" />
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
