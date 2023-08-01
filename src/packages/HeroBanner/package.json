@@ -1,0 +1,7 @@
+{
+  "name": "@rule-of-thumb/hero-banner",
+  "version": "1.0.0",
+  "main": "index.tsx",
+  "private": true,
+  "dependencies": {}
+}
