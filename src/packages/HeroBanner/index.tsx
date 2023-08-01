@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 import styles from './css/styles.module.css';
-import pope from '../../assets/assets/img/pope-francis.png'
-import pope2x from '../../assets/assets/img/pope-francis.@2x.png'
 
 const HeroBanner = ({ children, pictureSrc }: { children: ReactNode, pictureSrc: string }) => {
   return (

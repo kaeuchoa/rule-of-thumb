@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rule-of-thumb/hero-banner": "file:src/packages/HeroBanner",
     "@rule-of-thumb/navbar": "file:src/packages/NavBar",
     "@rule-of-thumb/poll-card": "file:src/packages/PollCard",
     "@rule-of-thumb/polls-list": "file:src/packages/PollsList",

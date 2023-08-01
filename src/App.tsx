@@ -2,12 +2,12 @@ import './App.css';
 import Footer from './layout/Footer';
 import Main from './layout/main';
 import Navbar from '@rule-of-thumb/navbar';
+import PollCard from '@rule-of-thumb/poll-card';
 import { CelebrityDataProvider, useCelebrities } from './data/CelebrityService';
 import { PollDataProvider } from './data/PollService';
-import HeroBanner from './packages/HeroBanner';
+import HeroBanner from '@rule-of-thumb/hero-banner';
 import { useNegativeVote, usePositiveVote } from './shared/hooks';
 import { Celebrity } from './shared/types';
-import PollCard from '@rule-of-thumb/poll-card';
 
 function orderByLastUpdated(items: Celebrity[]): Celebrity[] {
   return items.slice().sort((a, b) => {
