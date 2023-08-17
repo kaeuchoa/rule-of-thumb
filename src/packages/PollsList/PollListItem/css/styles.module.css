@@ -1,14 +1,17 @@
 :root {
   --base-space: 10px;
   --sm-space: calc(var(--base-space) / 2);
+  --md-space: calc(var(--base-space) * 1.5);
+  --lg-space: calc(var(--base-space) * 2.5);
 }
 
 .poll-list-item {
-  padding-top: calc(var(--base-space) * 4);
+  padding-top: calc(var(--base-space) * 10);
   position: relative;
   color: #fff;
   width: 100%;
-  height: 400px;
+  max-height: 300px;
+  max-width: 300px;
   margin-bottom: 20px;
 }
 
@@ -22,15 +25,55 @@
   height: 100%;
   object-fit: cover;
   top: 0;
-  right:0;
+  right: 0;
   bottom: 0;
   left: 0;
 }
 
-.header {
-  display: flex;
-  width: 100%;
+.content-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   position: relative;
+}
+
+.header-area,
+.duration-area,
+.voting-area {
+  padding-right: var(--lg-space);
+}
+
+
+.header-area {
+  grid-area: 1 / 2 / 3 / 4;
+}
+
+.duration-area {
+  grid-area: 3 / 1 / 4 / 4;
+  text-align: right;
+}
+
+.duration-area p {
+  font-weight: bold;
+}
+
+.voting-area {
+  grid-area: 4 / 1 / 5 / 4;
+  justify-content: right;
+  display: flex;
+  align-items: center;
+}
+
+.result-bar-area {
+  grid-area: 5 / 1 / 6 / 4;
+  width: 100%;
+  display: flex;
+}
+
+.header {
+  width: 100%;
 }
 
 .header h1 {
@@ -41,6 +84,13 @@
   align-self: end;
 }
 
+.header p {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-bottom: 0;
+  padding: inherit;
+}
+
 .result-icon {
   padding: var(--sm-space);
   border: 0;
@@ -48,23 +98,101 @@
   cursor: pointer;
 }
 
-.result-icon--positive {
-  background-color: rgba(var(--color-green-positive), .8);
+.result-icon--positive,
+.radio-container--positive {
+  background-color: rgba(var(--color-green-positive), 1);
 }
 
+/*  todo update this color */
 .result-icon--positive:hover {
   background-color: rgba(var(--color-green-positive), 1);
 }
 
-.result-icon--negative {
-  background-color: rgba(var(--color-yellow-negative), .8);
+.result-icon--negative,
+.radio-container--negative {
+  background-color: rgba(var(--color-yellow-negative), 1);
 }
 
+/*  todo update this color */
 .result-icon--negative:hover {
   background-color: rgba(var(--color-yellow-negative), 1);
 }
 
-.result-icon>img {
+.radio-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  padding: var(--sm-space);
+  margin-right: var(--base-space);
+}
+
+.radio-container img {
+  width: auto;
+  height: auto;
+}
+
+.radio-container input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-container label {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.vote-button {
+  background-color: rgba(0, 0, 0, .7);
+  border: 2px solid #fff;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  height: 40px;
+  padding: var(--sm-space) var(--md-space);
+}
+
+.scale-bar {
+  height: 35px;
+  display: flex;
+  width: 100%;
+  font-size: 1.5rem;
+  align-self: flex-end;
+  margin-top: var(--base-space);
+}
+
+.scale-bar div {
+  height: 100%;
+  padding: 0 var(--base-space);
+  align-items: center;
+  display: flex;
+}
+
+.scale-bar--negative img,
+.scale-bar--positive img {
+  padding: 5px;
+}
+.scale-bar--positive {
+  background-color: rgba(var(--color-green-positive), .8);
+  display: flex;
+  justify-content: start;
+}
+
+.scale-bar--negative {
+  display: flex;
+  justify-content: end;
+  background-color: rgba(var(--color-yellow-negative), .8);
 }

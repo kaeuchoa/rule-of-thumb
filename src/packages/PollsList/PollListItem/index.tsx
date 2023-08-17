@@ -6,6 +6,24 @@ import thumbDown from './assets/imgs/thumbs-down.svg';
 import classNames from 'classnames';
 
 export type ThumbsIcon = 'thumb-up' | 'thumb-down';
+
+function getPercentage(votes: number, totalVotes: number): number {
+  if (totalVotes === 0) {
+    return 0;
+  }
+
+  const percentage = (votes / totalVotes) * 100;
+  return Math.round(percentage);
+}
+
+function ellipsizeText(text: string, maxLength: number): string {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + '...';
+  }
+  return text;
+}
+
+
 interface PollListItemProps {
   icon: ThumbsIcon;
   imageUrl: string;
@@ -33,34 +51,58 @@ const PollListItem: React.FC<PollListItemProps> = ({
   onThumbDownClick,
   onVoteClick,
 }) => {
+
+  const totalVotes = thumbsUpCount + thumbsDownCount;
+  const positivePercentage = getPercentage(thumbsUpCount, totalVotes);
+  const negativePercentage = getPercentage(thumbsDownCount, totalVotes);
   return (
     <div className={styles["poll-list-item"]}>
       <img src={imageUrl} alt="" aria-hidden="true" />
-      <div className={styles['content']}>
-        <div className={styles["header"]}>
+      <div className={styles['content-container']}>
+        <div>
           <ResultIcon icon={icon} />
+        </div>
+        <div className={`${styles['header-area']} ${styles['header']}`}>
           <h1>{title}</h1>
+          <p>{ellipsizeText(description, 70)}</p>
         </div>
-        <p className="short-description">{description}</p>
-        <p>{`Open for: ${openDuration} | Category: ${category}`}</p>
-        <div className="voting-buttons">
-          <button className="thumb-up-button" onClick={onThumbUpClick}>
-            Thumb Up
+        <div className={styles['duration-area']}>
+          <p>{`${openDuration} in ${category}`}</p>
+        </div>
+        <div className={styles['voting-area']}>
+          <div className={`${styles['radio-container']} ${styles['radio-container--positive']}`}>
+            <label htmlFor="positive-vote">
+              Select Thumb Up
+            </label>
+            <img src={thumbUp} alt="" aria-hidden="true" />
+            <input type="radio" name="voting" value='positive' id='positive-vote' />
+          </div>
+          <div className={`${styles['radio-container']} ${styles['radio-container--negative']}`}>
+            <label htmlFor="negative-vote">
+              Select Thumb Down
+            </label>
+            <img src={thumbDown} alt="" aria-hidden="true" />
+            <input type="radio" name="voting" value='negative' id='negative-vote' />
+          </div>
+          <button className={styles['vote-button']} onClick={onVoteClick}>
+            Vote Now
           </button>
-          <button className="thumb-down-button" onClick={onThumbDownClick}>
-            Thumb Down
-          </button>
+
         </div>
-        <button className="vote-button" onClick={onVoteClick}>
-          Vote
-        </button>
-        <div className="result-bar" >
-          <div className="result-thumb-up" style={{ width: `${(thumbsUpCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
-          <div className="result-thumb-down" style={{ width: `${(thumbsDownCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
+        <div className={styles['result-bar-area']}>
+          <div className={styles['scale-bar']}>
+            <div className={styles['scale-bar--positive']} style={{ width: `${positivePercentage}%` }}>
+              <img src={thumbUp} alt="" aria-hidden="true" />
+              <span>{`${positivePercentage}%`}</span>
+            </div>
+            <div className={styles['scale-bar--negative']} style={{ width: `${negativePercentage}%` }}>
+              <span>{`${negativePercentage}%`}</span>
+              <img src={thumbDown} alt="" aria-hidden="true" />
+            </div>
+          </div>
         </div>
-        <p className="result-count">{`${thumbsUpCount}% Thumb Up | ${thumbsDownCount}% Thumb Down`}</p>
       </div>
-    </div>
+    </div >
   );
 };
 
