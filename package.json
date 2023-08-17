@@ -6,7 +6,7 @@
     "@rule-of-thumb/hero-banner": "file:src/packages/HeroBanner",
     "@rule-of-thumb/navbar": "file:src/packages/NavBar",
     "@rule-of-thumb/poll-card": "file:src/packages/PollCard",
-    "@rule-of-thumb/polls-list": "file:src/packages/PollsList",
+    "@rule-of-thumb/poll-list-item": "file:src/packages/PollListItem",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
