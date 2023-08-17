@@ -4,26 +4,10 @@ import styles from './css/styles.module.css';
 import thumbUp from './assets/imgs/thumbs-up.svg';
 import thumbDown from './assets/imgs/thumbs-down.svg';
 import classNames from 'classnames';
+import { getPercentage } from '../shared/getPercentage';
+import { ellipsizeText } from '../shared/ellipsizeText';
 
 export type ThumbsIcon = 'thumb-up' | 'thumb-down';
-
-function getPercentage(votes: number, totalVotes: number): number {
-  if (totalVotes === 0) {
-    return 0;
-  }
-
-  const percentage = (votes / totalVotes) * 100;
-  return Math.round(percentage);
-}
-
-function ellipsizeText(text: string, maxLength: number): string {
-  if (text.length > maxLength) {
-    return text.slice(0, maxLength) + '...';
-  }
-  return text;
-}
-
-
 interface PollListItemProps {
   icon: ThumbsIcon;
   imageUrl: string;
