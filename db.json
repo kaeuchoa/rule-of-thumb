@@ -85,7 +85,7 @@
         "name": "Kanye West",
         "description": "Born in Atlanta and raised in Chicago, West was first known as a producer for Roc-A-Fella Records in the early 2000s, producing singles for several mainstream artists.",
         "category": "entertainment",
-        "picture": "kanye.png",
+        "picture": "https://variety.com/wp-content/uploads/2022/10/Kanye-West-4.jpg?w=1000&h=563&crop=1",
         "lastUpdated": "2020-03-10T23:08:57.892Z",
         "votes": {
           "positive": 93,
@@ -104,7 +104,7 @@
         "name": "Mark Zuckerberg",
         "description": "Born in White Plains, New York, Zuckerberg attended Harvard University, where he launched the Facebook social networking service from his dormitory room on February 4, 2004.",
         "category": "business",
-        "picture": "mark.png",
+        "picture": "https://cdn.britannica.com/99/236599-050-1199AD2C/Mark-Zuckerberg-2019.jpg",
         "lastUpdated": "2021-02-14T23:10:19.134Z",
         "votes": {
           "positive": 418,
@@ -123,7 +123,7 @@
         "name": "Cristina Fernández de Kirchner",
         "description": "Her first term of office started with a conflict with the agricultural sector, and her proposed taxation system was rejected.",
         "category": "politics",
-        "picture": "cristina.png",
+        "picture": "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/Reuters_Direct_Media/BrazilOnlineReportWorldNews/tagreuters.com2021binary_LYNXMPEH8E15Z-BASEIMAGE-e1670267789742.jpg?w=800&h=450&crop=1",
         "lastUpdated": "2020-12-10T23:41:07.120Z",
         "votes": {
           "positive": 45,
@@ -142,7 +142,7 @@
         "name": "Malala Yousafzai",
         "description": "The daughter of educational activist Ziauddin, Yousafzai was born to a Pashtun family in Mingora, Khyber Pakhtunkhwa, Pakistan. Her family came to run a chain of schools in the region.",
         "category": "politics",
-        "picture": "malala.png",
+        "picture": "https://www.apple.com/newsroom/images/product/apple-tv-plus/standard/Apple_Nobel-laureate-Malala-Yousafzai-to-bring-empowering-programming-to-Apple-TVPlus_030821_big.jpg.large_2x.jpg",
         "lastUpdated": "2020-12-10T23:41:07.120Z",
         "votes": {
           "positive": 18,
@@ -161,7 +161,7 @@
         "name": "Elon Musk",
         "description": "In 2002, Musk founded SpaceX, an aerospace manufacturer and space transport services company, of which he is CEO, CTO, and lead designer.",
         "category": "business",
-        "picture": "elon.png",
+        "picture": "https://pbs.twimg.com/media/E87tnl2WQAIDfY_?format=jpg&name=medium",
         "lastUpdated": "2020-12-20T23:43:38.041Z",
         "votes": {
           "positive": 1237,
