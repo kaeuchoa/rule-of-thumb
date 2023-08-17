@@ -24,7 +24,7 @@ describe('PollListItem component', () => {
     expect(screen.getByText('👍')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Short description')).toBeInTheDocument();
-    expect(screen.getByText('Open for: 2 days | Category: Entertainment')).toBeInTheDocument();
+    expect(screen.getByText('2 days ago in Entertainment')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Thumb Up' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Thumb Down' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Vote' })).toBeInTheDocument();

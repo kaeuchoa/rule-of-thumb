@@ -1,13 +1,12 @@
-// PollListItem.tsx
 import React from 'react';
 import styles from './css/styles.module.css';
 import thumbUp from './assets/imgs/thumbs-up.svg';
 import thumbDown from './assets/imgs/thumbs-down.svg';
 import classNames from 'classnames';
-import { getPercentage } from '../shared/getPercentage';
-import { ellipsizeText } from '../shared/ellipsizeText';
-import { getTimeDiff } from '../shared/getTimeDiff';
-import { formatTimePeriod } from '../shared/formatTimePeriod';
+import { getPercentage } from './shared/getPercentage';
+import { ellipsizeText } from './shared/ellipsizeText';
+import { getTimeDiff } from './shared/getTimeDiff';
+import { formatTimePeriod } from './shared/formatTimePeriod';
 
 export type ThumbsIcon = 'thumb-up' | 'thumb-down';
 interface PollListItemProps {

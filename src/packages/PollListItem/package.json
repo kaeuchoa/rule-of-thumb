@@ -1,6 +1,7 @@
 {
-  "name": "@rule-of-thumb/polls-list",
+  "name": "@rule-of-thumb/poll-list-item",
   "main": "index.tsx",
+  "version": "1.0.0",
   "dependencies": {
     "classnames": "^2.3.2"
   }
