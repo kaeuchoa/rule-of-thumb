@@ -6,6 +6,8 @@ import thumbDown from './assets/imgs/thumbs-down.svg';
 import classNames from 'classnames';
 import { getPercentage } from '../shared/getPercentage';
 import { ellipsizeText } from '../shared/ellipsizeText';
+import { getTimeDiff } from '../shared/getTimeDiff';
+import { formatTimePeriod } from '../shared/formatTimePeriod';
 
 export type ThumbsIcon = 'thumb-up' | 'thumb-down';
 interface PollListItemProps {
@@ -39,6 +41,7 @@ const PollListItem: React.FC<PollListItemProps> = ({
   const totalVotes = thumbsUpCount + thumbsDownCount;
   const positivePercentage = getPercentage(thumbsUpCount, totalVotes);
   const negativePercentage = getPercentage(thumbsDownCount, totalVotes);
+  const timePeriod = formatTimePeriod(getTimeDiff(new Date(openDuration)));
   return (
     <div className={styles["poll-list-item"]}>
       <img src={imageUrl} alt="" aria-hidden="true" />
@@ -51,7 +54,7 @@ const PollListItem: React.FC<PollListItemProps> = ({
           <p>{ellipsizeText(description, 70)}</p>
         </div>
         <div className={styles['duration-area']}>
-          <p>{`${openDuration} in ${category}`}</p>
+          <p>{`${timePeriod} ago in ${category}`}</p>
         </div>
         <div className={styles['voting-area']}>
           <div className={`${styles['radio-container']} ${styles['radio-container--positive']}`}>
