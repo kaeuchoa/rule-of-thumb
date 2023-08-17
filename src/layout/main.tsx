@@ -1,6 +1,4 @@
 import PollsList from '@rule-of-thumb/polls-list';
-
-import styles from './styles.module.css';
 import CTABanner from './CTABanner';
 import SpeakOutBanner from './SpeakOutBanner';
 
