@@ -1,6 +1,13 @@
 // PollListItem.tsx
-
 import React from 'react';
+import styles from './css/styles.module.css';
+import thumbUp from './assets/imgs/thumbs-up.svg';
+import thumbDown from './assets/imgs/thumbs-down.svg';
+import classNames from 'classnames';
+import { getPercentage } from '../shared/getPercentage';
+import { ellipsizeText } from '../shared/ellipsizeText';
+import { getTimeDiff } from '../shared/getTimeDiff';
+import { formatTimePeriod } from '../shared/formatTimePeriod';
 
 export type ThumbsIcon = 'thumb-up' | 'thumb-down';
 interface PollListItemProps {
@@ -30,31 +37,73 @@ const PollListItem: React.FC<PollListItemProps> = ({
   onThumbDownClick,
   onVoteClick,
 }) => {
+
+  const totalVotes = thumbsUpCount + thumbsDownCount;
+  const positivePercentage = getPercentage(thumbsUpCount, totalVotes);
+  const negativePercentage = getPercentage(thumbsDownCount, totalVotes);
+  const timePeriod = formatTimePeriod(getTimeDiff(new Date(openDuration)));
   return (
-    <div className="poll-list-item">
-      <div className="icon">{icon === 'thumb-up' ? '👍' : '👎'}</div>
+    <div className={styles["poll-list-item"]}>
       <img src={imageUrl} alt="" aria-hidden="true" />
-      <h1>{title}</h1>
-      <p className="short-description">{description}</p>
-      <p>{`Open for: ${openDuration} | Category: ${category}`}</p>
-      <div className="voting-buttons">
-        <button className="thumb-up-button" onClick={onThumbUpClick}>
-          Thumb Up
-        </button>
-        <button className="thumb-down-button" onClick={onThumbDownClick}>
-          Thumb Down
-        </button>
+      <div className={styles['content-container']}>
+        <div>
+          <ResultIcon icon={icon} />
+        </div>
+        <div className={`${styles['header-area']} ${styles['header']}`}>
+          <h1>{title}</h1>
+          <p>{ellipsizeText(description, 70)}</p>
+        </div>
+        <div className={styles['duration-area']}>
+          <p>{`${timePeriod} ago in ${category}`}</p>
+        </div>
+        <div className={styles['voting-area']}>
+          <div className={`${styles['radio-container']} ${styles['radio-container--positive']}`}>
+            <label htmlFor="positive-vote">
+              Select Thumb Up
+            </label>
+            <img src={thumbUp} alt="" aria-hidden="true" />
+            <input type="radio" name="voting" value='positive' id='positive-vote' />
+          </div>
+          <div className={`${styles['radio-container']} ${styles['radio-container--negative']}`}>
+            <label htmlFor="negative-vote">
+              Select Thumb Down
+            </label>
+            <img src={thumbDown} alt="" aria-hidden="true" />
+            <input type="radio" name="voting" value='negative' id='negative-vote' />
+          </div>
+          <button className={styles['vote-button']} onClick={onVoteClick}>
+            Vote Now
+          </button>
+
+        </div>
+        <div className={styles['result-bar-area']}>
+          <div className={styles['scale-bar']}>
+            <div className={styles['scale-bar--positive']} style={{ width: `${positivePercentage}%` }}>
+              <img src={thumbUp} alt="" aria-hidden="true" />
+              <span>{`${positivePercentage}%`}</span>
+            </div>
+            <div className={styles['scale-bar--negative']} style={{ width: `${negativePercentage}%` }}>
+              <span>{`${negativePercentage}%`}</span>
+              <img src={thumbDown} alt="" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
       </div>
-      <button className="vote-button" onClick={onVoteClick}>
-        Vote
-      </button>
-      <div className="result-bar" >
-        <div className="result-thumb-up" style={{ width: `${(thumbsUpCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
-        <div className="result-thumb-down" style={{ width: `${(thumbsDownCount / (thumbsUpCount + thumbsDownCount)) * 100}%` }} />
-      </div>
-      <p className="result-count">{`${thumbsUpCount}% Thumb Up | ${thumbsDownCount}% Thumb Down`}</p>
-    </div>
+    </div >
   );
 };
+
+const ResultIcon = ({ icon }: { icon: ThumbsIcon }) => {
+  const isThumbUp = icon === 'thumb-up';
+  return (
+    <span className={classNames({
+      [styles['result-icon']]: true,
+      [styles['result-icon--positive']]: isThumbUp,
+      [styles['result-icon--negative']]: !isThumbUp,
+    })}>
+      <img src={isThumbUp ? thumbUp : thumbDown} alt={isThumbUp ? 'thumbs up' : 'thumbs down'} />
+    </span>
+  )
+}
 
 export default PollListItem;
