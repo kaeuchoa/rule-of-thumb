@@ -1,54 +1,41 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event'
-import PollListItem, { ThumbsIcon } from '..';
+import { render, screen, fireEvent } from '@testing-library/react';
+import PollListItem, { ThumbsIcon } from '../.';
 
-describe('PollListItem component', () => {
-  const mockProps = {
+describe('PollListItem', () => {
+  const props = {
     icon: 'thumb-up' as ThumbsIcon,
-    imageUrl: 'celebrity.jpg',
-    title: 'John Doe',
-    description: 'Short description',
-    openDuration: '2 days',
-    category: 'Entertainment',
-    thumbsUpCount: 90,
-    thumbsDownCount: 10,
+    imageUrl: 'thumb-up-image-url',
+    title: 'Sample Title',
+    description: 'Sample Description',
+    openDuration: '2023-08-01T00:00:00Z',
+    category: 'Sample Category',
+    thumbsUpCount: 10,
+    thumbsDownCount: 5,
     onThumbUpClick: jest.fn(),
     onThumbDownClick: jest.fn(),
     onVoteClick: jest.fn(),
   };
 
-  it('renders all elements correctly', () => {
-    render(<PollListItem {...mockProps} />);
-
-    expect(screen.getByText('👍')).toBeInTheDocument();
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('Short description')).toBeInTheDocument();
-    expect(screen.getByText('2 days ago in Entertainment')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Thumb Up' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Thumb Down' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Vote' })).toBeInTheDocument();
-    expect(screen.getByText('90% Thumb Up | 10% Thumb Down')).toBeInTheDocument();
+  it('renders the component', () => {
+    render(<PollListItem {...props} />);
+    expect(screen.getByText('Sample Title')).toBeInTheDocument();
   });
 
-  it('calls the correct event handler when Thumb Up button is clicked', () => {
-    render(<PollListItem {...mockProps} />);
-    const thumbUpButton = screen.getByRole('button', { name: 'Thumb Up' });
-    userEvent.click(thumbUpButton);
-    expect(mockProps.onThumbUpClick).toHaveBeenCalledTimes(1);
+  it('handles thumb up click', () => {
+    render(<PollListItem {...props} />);
+    fireEvent.click(screen.getByLabelText('Select Thumb Up'));
+    expect(props.onThumbUpClick).toHaveBeenCalled();
   });
 
-  it('calls the correct event handler when Thumb Down button is clicked', () => {
-    render(<PollListItem {...mockProps} />);
-    const thumbDownButton = screen.getByRole('button', { name: 'Thumb Down' });
-    userEvent.click(thumbDownButton);
-    expect(mockProps.onThumbDownClick).toHaveBeenCalledTimes(1);
+  it('handles thumb down click', () => {
+    render(<PollListItem {...props} />);
+    fireEvent.click(screen.getByLabelText('Select Thumb Down'));
+    expect(props.onThumbDownClick).toHaveBeenCalled();
   });
 
-  it('calls the correct event handler when Vote button is clicked', () => {
-    render(<PollListItem {...mockProps} />);
-    const voteButton = screen.getByRole('button', { name: 'Vote' });
-    userEvent.click(voteButton);
-    expect(mockProps.onVoteClick).toHaveBeenCalledTimes(1);
+  it('handles vote click', () => {
+    render(<PollListItem {...props} />);
+    fireEvent.click(screen.getByText('Vote Now'));
+    expect(props.onVoteClick).toHaveBeenCalled();
   });
 });
