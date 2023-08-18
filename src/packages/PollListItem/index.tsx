@@ -22,6 +22,7 @@ interface PollListItemProps {
   onThumbDownClick: () => void;
   onVoteClick: () => void;
   isMobileView?: boolean
+  hasVotedOnPoll?: boolean
 }
 
 const PollListItem: React.FC<PollListItemProps> = ({
@@ -36,9 +37,11 @@ const PollListItem: React.FC<PollListItemProps> = ({
   onThumbUpClick,
   onThumbDownClick,
   onVoteClick,
-  isMobileView = false
+  isMobileView = false,
+  hasVotedOnPoll = false
 }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
+  const [voteBtnText, setVoteBtnText] = useState<string>(!hasVotedOnPoll ? 'Vote Now' : 'Vote Again');
 
   const totalVotes = thumbsUpCount + thumbsDownCount;
   const positivePercentage = getPercentage(thumbsUpCount, totalVotes);
@@ -53,6 +56,11 @@ const PollListItem: React.FC<PollListItemProps> = ({
       onThumbDownClick();
     }
   };
+
+  function onClickHandler(): void {
+    onVoteClick();
+    setVoteBtnText('Vote Again');
+  }
 
   return (
     <div className={classNames(
@@ -114,8 +122,8 @@ const PollListItem: React.FC<PollListItemProps> = ({
             <img src={thumbDown} alt="" aria-hidden="true" />
             <input type="radio" name="voting" value='negative' id='negative-vote' onChange={(event) => handleOptionChange(event)} />
           </div>
-          <button className={styles['vote-button']} disabled={selectedOption === ''} onClick={onVoteClick}>
-            Vote Now
+          <button className={styles['vote-button']} disabled={selectedOption === ''} onClick={onClickHandler}>
+            {voteBtnText}
           </button>
 
         </div>

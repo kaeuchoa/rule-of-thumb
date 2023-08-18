@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive'
 import CTABanner from './CTABanner';
 import SpeakOutBanner from './SpeakOutBanner';
 import { usePolls } from '../data/PollService';
-import { useVoteHandler } from '../shared/hooks';
+import { useVoteHandler, useVotedPolls } from '../shared/hooks';
 import { VoteType } from '../shared/types';
 import LayoutToggle from './LayoutToggle';
 import styles from './styles.module.css'
@@ -13,6 +13,7 @@ import styles from './styles.module.css'
 const Main = () => {
   const { data: polls, isLoading } = usePolls();
   const { handleVoteClick, setVote } = useVoteHandler()
+  const { hasVotedOnPoll } = useVotedPolls();
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   if (isLoading) {
@@ -55,6 +56,7 @@ const Main = () => {
                   onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                   onVoteClick={handleVoteClick}
                   isMobileView={true}
+                  hasVotedOnPoll={hasVotedOnPoll(id)}
                 />
               </li>
             ))}
@@ -78,6 +80,7 @@ const Main = () => {
                   onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                   onVoteClick={handleVoteClick}
                   isMobileView={layout === 'grid'}
+                  hasVotedOnPoll={hasVotedOnPoll(id)}
                 />
               </li>
             ))}
