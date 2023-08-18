@@ -12,8 +12,9 @@ import styles from './styles.module.css'
 
 const Main = () => {
   const { data: polls, isLoading } = usePolls();
-  const { handleVoteClick, setVote } = useVoteHandler();
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const { handleVoteClick, setVote } = useVoteHandler()
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
+
   if (isLoading) {
     return <>loading....</>
   }

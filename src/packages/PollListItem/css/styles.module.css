@@ -209,3 +209,43 @@
   justify-content: end;
   background-color: rgba(var(--color-yellow-negative), .8);
 }
+
+.poll-list-item--list {
+  max-width: unset;
+  padding-top: 0;
+}
+
+.gradient-overlay {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(79,79,79,0.4) 34%, rgb(109, 109, 109) 100%);
+}
+
+.poll-list-item--list>img {
+  width: 35%;
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(128, 128, 128) 60%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(128, 128, 128, 1) 60%);
+}
+
+.content-container--list {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.header-area--list {
+  grid-area: 1 / 2 / 5 / 2;
+  padding: 0;
+  padding-top: var(--sm-space);
+}
+
+.duration-area--list {
+  grid-area: 1 / 3 / 2 / 4;
+}
+
+.voting-area--list {
+  grid-area: 2 / 3 / 2 / 4;
+}
