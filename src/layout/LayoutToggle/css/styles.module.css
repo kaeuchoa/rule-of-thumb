@@ -1,6 +1,7 @@
 .layout {
   display: block;
-  transition: opacity 1s ease-in-out; /* Add transition for opacity */
+  transition: opacity 1s ease-in-out;
+  /* Add transition for opacity */
 }
 
 .layout li {
@@ -17,17 +18,22 @@
   gap: 20px;
 }
 
-.select-layout {
-  border: 2px solid black;
-  background-color: white;
-  padding: 5px;
-  margin: 10px 0;
-  min-width: 120px;
+.select-container {
+  display: none;
 }
 
-.select-container {
-  width: 100%;
-  ;
-  display: flex;
-  justify-content: flex-end;
+@media all and (min-width: 768px) {
+  .select-layout {
+    border: 2px solid black;
+    background-color: white;
+    padding: 5px;
+    margin: 10px 0;
+    min-width: 120px;
+  }
+
+  .select-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
