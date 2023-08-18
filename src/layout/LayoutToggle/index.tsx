@@ -1,8 +1,8 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 import styles from './css/styles.module.css';
 
 interface CardLayoutProps {
-  children: ReactNode;
+  children: (layout: string) => JSX.Element[];
 }
 
 const LayoutToggle: React.FC<CardLayoutProps> = ({ children }) => {
@@ -21,11 +21,7 @@ const LayoutToggle: React.FC<CardLayoutProps> = ({ children }) => {
         </select>
       </div>
       <div className={`${styles['layout']} ${styles[layout]}`}>
-        {React.Children.map(children, (child, index) => (
-          <div key={index}>
-            {child}
-          </div>
-        ))}
+        {children(layout)}
       </div>
     </>
   );

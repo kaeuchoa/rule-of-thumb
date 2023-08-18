@@ -26,7 +26,7 @@ const Main = () => {
       <section>
         <h2>Previous Rulings</h2>
         <LayoutToggle>
-          {polls.map(({ id, celebrity, openingDate, resultIcon }) => (
+          {layout => polls.map(({ id, celebrity, openingDate, resultIcon }) => (
             <li>
               <PollListItem
                 key={id}
@@ -41,6 +41,7 @@ const Main = () => {
                 onThumbDownClick={() => setVote({ pollId: id, vote: VoteType.negative })}
                 onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                 onVoteClick={handleVoteClick}
+                isMobileView={layout === 'grid'}
               />
             </li>
           ))}
