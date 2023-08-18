@@ -1,12 +1,14 @@
+li {
+  list-style: none;
+}
+
 .layout {
   display: block;
   transition: opacity 1s ease-in-out; /* Add transition for opacity */
 }
-
-.layout li {
-  list-style: none;
+*:focus-visible {
+  outline: none;
 }
-
 .list {
   display: block;
 }
