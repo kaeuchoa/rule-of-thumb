@@ -1,4 +1,5 @@
 import PollListItem from '@rule-of-thumb/poll-list-item';
+import { useMediaQuery } from 'react-responsive'
 import CTABanner from './CTABanner';
 import SpeakOutBanner from './SpeakOutBanner';
 import { usePolls } from '../data/PollService';
@@ -10,6 +11,7 @@ import styles from './styles.module.css'
 const Main = () => {
   const { data: polls, isLoading } = usePolls();
   const { handleVoteClick, setVote } = useVoteHandler()
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   if (isLoading) {
     return <>loading....</>
@@ -26,7 +28,7 @@ const Main = () => {
       <section>
         <h2>Previous Rulings</h2>
         <LayoutToggle>
-          {polls.map(({ id, celebrity, openingDate, resultIcon }) => (
+          {layout => polls.map(({ id, celebrity, openingDate, resultIcon }) => (
             <li>
               <PollListItem
                 key={id}
@@ -41,6 +43,7 @@ const Main = () => {
                 onThumbDownClick={() => setVote({ pollId: id, vote: VoteType.negative })}
                 onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                 onVoteClick={handleVoteClick}
+                isMobileView={isMobile || layout === 'grid'}
               />
             </li>
           ))}

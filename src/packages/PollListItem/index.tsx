@@ -21,6 +21,7 @@ interface PollListItemProps {
   onThumbUpClick: () => void;
   onThumbDownClick: () => void;
   onVoteClick: () => void;
+  isMobileView?: boolean
 }
 
 const PollListItem: React.FC<PollListItemProps> = ({
@@ -35,6 +36,7 @@ const PollListItem: React.FC<PollListItemProps> = ({
   onThumbUpClick,
   onThumbDownClick,
   onVoteClick,
+  isMobileView = false
 }) => {
 
   const totalVotes = thumbsUpCount + thumbsDownCount;
@@ -42,20 +44,39 @@ const PollListItem: React.FC<PollListItemProps> = ({
   const negativePercentage = getPercentage(thumbsDownCount, totalVotes);
   const timePeriod = formatTimePeriod(getTimeDiff(new Date(openDuration)));
   return (
-    <div className={styles["poll-list-item"]}>
+    <div className={classNames(
+      {
+        [styles["poll-list-item"]]: true,
+        [styles["poll-list-item--list"]]: !isMobileView
+      }
+    )}>
       <img src={imageUrl} alt="" aria-hidden="true" />
-      <div className={styles['content-container']}>
+      <div className={classNames({ [styles["gradient-overlay"]]: !isMobileView })} />
+      <div className={classNames({
+        [styles['content-container']]: true,
+        [styles['content-container--list']]: !isMobileView
+      })}>
         <div>
           <ResultIcon icon={icon} />
         </div>
-        <div className={`${styles['header-area']} ${styles['header']}`}>
+        <div className={classNames({
+          [styles['header']]: true,
+          [styles['header-area']]: true,
+          [styles['header-area--list']]: !isMobileView
+        })}>
           <h1>{title}</h1>
           <p>{ellipsizeText(description, 70)}</p>
         </div>
-        <div className={styles['duration-area']}>
+        <div className={classNames({
+          [styles['duration-area']]: true,
+          [styles['duration-area--list']]: !isMobileView,
+        })}>
           <p>{`${timePeriod} ago in ${category}`}</p>
         </div>
-        <div className={styles['voting-area']}>
+        <div className={classNames({
+          [styles['voting-area']]: true,
+          [styles['voting-area--list']]: !isMobileView,
+        })}>
           <div className={`${styles['radio-container']} ${styles['radio-container--positive']}`}>
             <label htmlFor="positive-vote">
               Select Thumb Up
