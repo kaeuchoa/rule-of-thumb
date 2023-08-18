@@ -38,4 +38,18 @@ describe('PollListItem', () => {
     fireEvent.click(screen.getByText('Vote Now'));
     expect(props.onVoteClick).toHaveBeenCalled();
   });
+
+  it('handles "Vote Now" button click', () => {
+    const onVoteClickMock = jest.fn();
+
+    render(<PollListItem {...props} />);
+
+    const voteButton = screen.getByText('Vote Now');
+    fireEvent.click(voteButton);
+
+    expect(onVoteClickMock).toHaveBeenCalledTimes(1);
+
+
+    expect(screen.getByText('Vote Again')).toBeInTheDocument()
+  });
 });
