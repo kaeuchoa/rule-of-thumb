@@ -136,6 +136,10 @@
   margin-right: var(--base-space);
 }
 
+.radio-container--selected {
+  border: 2px solid #fff;
+}
+
 .radio-container img {
   width: auto;
   height: auto;
@@ -173,8 +177,14 @@
   padding: var(--sm-space) var(--md-space);
 }
 
-.vote-button:hover {
+.vote-button:not(:disabled):hover {
   text-decoration: underline;
+}
+
+.vote-button:disabled {
+  cursor: initial;
+  background-color: var(--color-light-background);
+  border: none;
 }
 
 .scale-bar {
