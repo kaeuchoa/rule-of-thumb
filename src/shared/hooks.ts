@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useSubmitVote, useUpdateNegativeVoteByCelebrityId, useUpdatePositiveVoteByCelebrityId } from '../data/PollService';
 import { Vote, VoteType } from './types';
 
-export function useVoteHandler() {
-  const submitVoteMutation = useSubmitVote();
+export function useVoteHandler(onSuccessCallBack: () => void, onErrorCallBack: () => void,) {
+  const submitVoteMutation = useSubmitVote(onSuccessCallBack, onErrorCallBack);
+  const { hasVotedOnPoll, saveVotedPoll } = useVotedPolls();
   const [vote, setVote] = useState<Vote>({ pollId: null, vote: null });
   const handleVoteClick = () => {
     if (vote.vote === null || vote.pollId === null) return;
@@ -12,6 +13,10 @@ export function useVoteHandler() {
       submitVoteMutation.mutate({ pollId: vote.pollId, voteType: VoteType.positive });
     } else {
       submitVoteMutation.mutate({ pollId: vote.pollId, voteType: VoteType.negative });
+    }
+
+    if (!hasVotedOnPoll(vote.pollId)) {
+      saveVotedPoll(vote.pollId);
     }
   };
 
@@ -36,6 +41,27 @@ export function useNegativeVote() {
   };
 
   return { handleThumbDownVote }
+}
+
+export function useVotedPolls() {
+  const [votedPolls, setVotedPolls] = useState<number[]>(getStoredVotedPolls());
+
+  function getStoredVotedPolls(): number[] {
+    const storedVotedPolls = sessionStorage.getItem('votedPolls');
+    return storedVotedPolls ? JSON.parse(storedVotedPolls) : [];
+  }
+
+  function saveVotedPoll(pollId: number) {
+    const updatedVotedPolls = [...votedPolls, pollId];
+    setVotedPolls(updatedVotedPolls);
+    sessionStorage.setItem('votedPolls', JSON.stringify(updatedVotedPolls));
+  }
+
+  function hasVotedOnPoll(pollId: number): boolean {
+    return votedPolls.includes(pollId);
+  }
+
+  return { votedPolls, saveVotedPoll, hasVotedOnPoll };
 }
 
 

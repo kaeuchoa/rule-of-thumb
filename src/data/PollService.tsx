@@ -111,13 +111,15 @@ export function usePolls() {
   });
 }
 
-export function useSubmitVote() {
+export function useSubmitVote(onSuccessCallBack: () => void, onErrorCallBack: () => void) {
   const mutation = useMutation<void, AxiosError, { pollId: number; voteType: VoteType }>(
     ({ pollId, voteType }) => new PollService().submitVote(pollId, voteType),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('polls');
+        onSuccessCallBack();
       },
+      onError: () => onErrorCallBack()
     }
   );
 

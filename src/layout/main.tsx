@@ -4,15 +4,20 @@ import { useMediaQuery } from 'react-responsive'
 import CTABanner from './CTABanner';
 import SpeakOutBanner from './SpeakOutBanner';
 import { usePolls } from '../data/PollService';
-import { useVoteHandler } from '../shared/hooks';
+import { useVoteHandler, useVotedPolls } from '../shared/hooks';
 import { VoteType } from '../shared/types';
 import LayoutToggle from './LayoutToggle';
 import styles from './styles.module.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Main = () => {
   const { data: polls, isLoading } = usePolls();
-  const { handleVoteClick, setVote } = useVoteHandler()
+  const notifySuccess = () => toast("Thank you for your vote!");
+  const notifyError = () => toast("Something wrong! Try again");
+  const { handleVoteClick, setVote } = useVoteHandler(notifySuccess, notifyError);
+  const { hasVotedOnPoll } = useVotedPolls();
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   if (isLoading) {
@@ -24,6 +29,7 @@ const Main = () => {
   }
   return (
     <main className={styles['main-container']}>
+      <ToastContainer />
       <section>
         <SpeakOutBanner />
       </section>
@@ -55,6 +61,7 @@ const Main = () => {
                   onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                   onVoteClick={handleVoteClick}
                   isMobileView={true}
+                  hasVotedOnPoll={hasVotedOnPoll(id)}
                 />
               </li>
             ))}
@@ -78,6 +85,7 @@ const Main = () => {
                   onThumbUpClick={() => setVote({ pollId: id, vote: VoteType.positive })}
                   onVoteClick={handleVoteClick}
                   isMobileView={layout === 'grid'}
+                  hasVotedOnPoll={hasVotedOnPoll(id)}
                 />
               </li>
             ))}

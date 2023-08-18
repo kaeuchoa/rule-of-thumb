@@ -4,12 +4,12 @@ li {
 
 .layout {
   display: block;
-  transition: opacity 1s ease-in-out;
-  /* Add transition for opacity */
 }
+
 *:focus-visible {
   outline: none;
 }
+
 .list {
   display: block;
 }

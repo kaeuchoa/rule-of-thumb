@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './css/styles.module.css';
 import thumbUp from './assets/imgs/thumbs-up.svg';
 import thumbDown from './assets/imgs/thumbs-down.svg';
@@ -22,6 +22,7 @@ interface PollListItemProps {
   onThumbDownClick: () => void;
   onVoteClick: () => void;
   isMobileView?: boolean
+  hasVotedOnPoll?: boolean
 }
 
 const PollListItem: React.FC<PollListItemProps> = ({
@@ -36,13 +37,32 @@ const PollListItem: React.FC<PollListItemProps> = ({
   onThumbUpClick,
   onThumbDownClick,
   onVoteClick,
-  isMobileView = false
+  isMobileView = false,
+  hasVotedOnPoll = false
 }) => {
+  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [voteBtnText, setVoteBtnText] = useState<string>(!hasVotedOnPoll ? 'Vote Now' : 'Vote Again');
 
   const totalVotes = thumbsUpCount + thumbsDownCount;
   const positivePercentage = getPercentage(thumbsUpCount, totalVotes);
   const negativePercentage = getPercentage(thumbsDownCount, totalVotes);
   const timePeriod = formatTimePeriod(getTimeDiff(new Date(openDuration)));
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.target.value);
+    if (event.target.value === 'positive') {
+      onThumbUpClick();
+    } else {
+      onThumbDownClick();
+    }
+  };
+
+  function onClickHandler(): void {
+    onVoteClick();
+    setVoteBtnText('Vote Again');
+    setSelectedOption('');
+  }
+
   return (
     <div className={classNames(
       {
@@ -77,22 +97,34 @@ const PollListItem: React.FC<PollListItemProps> = ({
           [styles['voting-area']]: true,
           [styles['voting-area--list']]: !isMobileView,
         })}>
-          <div className={`${styles['radio-container']} ${styles['radio-container--positive']}`}>
+          <div className={classNames(
+            {
+              [styles['radio-container']]: true,
+              [styles['radio-container--positive']]: true,
+              [styles['radio-container--selected']]: selectedOption === 'positive'
+            }
+          )}>
             <label htmlFor="positive-vote">
               Select Thumb Up
             </label>
             <img src={thumbUp} alt="" aria-hidden="true" />
-            <input type="radio" name="voting" value='positive' id='positive-vote' />
+            <input type="radio" name="voting" value='positive' id='positive-vote' onChange={(event) => handleOptionChange(event)} />
           </div>
-          <div className={`${styles['radio-container']} ${styles['radio-container--negative']}`}>
+          <div className={classNames(
+            {
+              [styles['radio-container']]: true,
+              [styles['radio-container--negative']]: true,
+              [styles['radio-container--selected']]: selectedOption === 'negative'
+            }
+          )}>
             <label htmlFor="negative-vote">
               Select Thumb Down
             </label>
             <img src={thumbDown} alt="" aria-hidden="true" />
-            <input type="radio" name="voting" value='negative' id='negative-vote' />
+            <input type="radio" name="voting" value='negative' id='negative-vote' onChange={(event) => handleOptionChange(event)} />
           </div>
-          <button className={styles['vote-button']} onClick={onVoteClick}>
-            Vote Now
+          <button className={styles['vote-button']} disabled={selectedOption === ''} onClick={onClickHandler}>
+            {voteBtnText}
           </button>
 
         </div>
