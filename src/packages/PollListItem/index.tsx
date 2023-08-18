@@ -60,6 +60,7 @@ const PollListItem: React.FC<PollListItemProps> = ({
   function onClickHandler(): void {
     onVoteClick();
     setVoteBtnText('Vote Again');
+    setSelectedOption('');
   }
 
   return (

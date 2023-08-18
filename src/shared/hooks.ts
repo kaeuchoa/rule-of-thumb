@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useSubmitVote, useUpdateNegativeVoteByCelebrityId, useUpdatePositiveVoteByCelebrityId } from '../data/PollService';
 import { Vote, VoteType } from './types';
 
-export function useVoteHandler() {
-  const submitVoteMutation = useSubmitVote();
+export function useVoteHandler(onSuccessCallBack: () => void, onErrorCallBack: () => void,) {
+  const submitVoteMutation = useSubmitVote(onSuccessCallBack, onErrorCallBack);
   const { hasVotedOnPoll, saveVotedPoll } = useVotedPolls();
   const [vote, setVote] = useState<Vote>({ pollId: null, vote: null });
   const handleVoteClick = () => {

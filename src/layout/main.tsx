@@ -8,11 +8,15 @@ import { useVoteHandler, useVotedPolls } from '../shared/hooks';
 import { VoteType } from '../shared/types';
 import LayoutToggle from './LayoutToggle';
 import styles from './styles.module.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Main = () => {
   const { data: polls, isLoading } = usePolls();
-  const { handleVoteClick, setVote } = useVoteHandler()
+  const notifySuccess = () => toast("Thank you for your vote!");
+  const notifyError = () => toast("Something wrong! Try again");
+  const { handleVoteClick, setVote } = useVoteHandler(notifySuccess, notifyError);
   const { hasVotedOnPoll } = useVotedPolls();
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
@@ -25,6 +29,7 @@ const Main = () => {
   }
   return (
     <main className={styles['main-container']}>
+      <ToastContainer />
       <section>
         <SpeakOutBanner />
       </section>
